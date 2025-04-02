@@ -7,10 +7,17 @@ jobs:
     runs-on: ubuntu-latest  # Usa un runner con Ubuntu
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3  # Clona el código
-      
+        uses: actions/checkout@v3  # Clona el código del repositorio
+
+      - name: Verify repository structure
+        run: ls -la  # Lista los archivos para confirmar la estructura
+
       - name: Install dependencies
-        run: npm install  # Instala dependencias de un proyecto Node.js
+        run: |
+          cd DeVops  # Asegura que esté en la carpeta correcta (ajusta si es necesario)
+          npm install
 
       - name: Run tests
-        run: npm test  # Ejecuta las pruebas
+        run: |
+          cd DeVops  # Asegura que está en la carpeta correcta antes de ejecutar pruebas
+          npm test
