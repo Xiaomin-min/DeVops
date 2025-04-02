@@ -1,0 +1,16 @@
+name: Run Tests on Push
+
+on: push  # Se ejecuta en cada push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest  # Usa un runner con Ubuntu
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3  # Clona el código
+      
+      - name: Install dependencies
+        run: npm install  # Instala dependencias de un proyecto Node.js
+
+      - name: Run tests
+        run: npm test  # Ejecuta las pruebas
