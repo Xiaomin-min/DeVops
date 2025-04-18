@@ -1,28 +1,36 @@
-name: Ejecutar Pruebas
+name: Ejecución de Pruebas Unitarias
 
-on: [push]
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   test:
     runs-on: windows-latest
     
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Setup .NET
+    - name: Checkout del código
+      uses: actions/checkout@v3
+      
+    - name: Mostrar estructura de archivos
+      run: |
+        echo "Estructura del repositorio:"
+        ls -R
+        echo "Archivos .csproj encontrados:"
+        find . -name "*.csproj"
+        
+    - name: Configurar .NET 6
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '6.0.x'
         
-    - name: Mostrar estructura
-      run: ls -R
+    - name: Restaurar dependencias
+      run: dotnet restore netcore/ExploringActions1/ExploringActions1.csproj
       
-    - name: Ejecutar tests
-      run: |
-        if [ -d "ExploringActions1" ]; then
-          dotnet test TestExploringActions1/TestExploringActions1.csproj
-        else
-          echo "ERROR: No encuentro la carpeta ExploringActions1"
-          ls
-          exit 1
-        fi
+    - name: Compilar proyecto
+      run: dotnet build netcore/ExploringActions1/ExploringActions1.csproj --no-restore
+      
+    - name: Ejecutar pruebas unitarias
+      run: dotnet test netcore/TestExploringActions1/TestExploringActions1.csproj --no-build --verbosity normal
