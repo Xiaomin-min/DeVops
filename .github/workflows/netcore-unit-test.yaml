@@ -17,14 +17,11 @@ jobs:
       with:
         dotnet-version: '6.0.x'
         
-    - name: Debug: Show folder structure
-      run: ls -R
-        
     - name: Restore dependencies
-      run: dotnet restore netcore/ExploringActions1/ExploringActions1.csproj
+      run: dotnet restore ExploringActions1/ExploringActions1.csproj
       
     - name: Build
-      run: dotnet build netcore/ExploringActions1/ExploringActions1.csproj --no-restore
+      run: dotnet build ExploringActions1/ExploringActions1.csproj --no-restore
       
     - name: Test
-      run: dotnet test netcore/TestExploringActions1/TestExploringActions1.csproj --no-build --verbosity normal
+      run: dotnet test TestExploringActions1/TestExploringActions1.csproj --no-build --verbosity normal
