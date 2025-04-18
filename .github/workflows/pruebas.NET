@@ -1,0 +1,28 @@
+name: Ejecutar Pruebas
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '6.0.x'
+        
+    - name: Mostrar estructura
+      run: ls -R
+      
+    - name: Ejecutar tests
+      run: |
+        if [ -d "ExploringActions1" ]; then
+          dotnet test TestExploringActions1/TestExploringActions1.csproj
+        else
+          echo "ERROR: No encuentro la carpeta ExploringActions1"
+          ls
+          exit 1
+        fi
